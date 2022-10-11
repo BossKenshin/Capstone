@@ -67,3 +67,10 @@ background-color:#c9c9c9;
     border: none;
     color: #fff;
 }
+
+#deptTable tr > *:nth-child(1) {
+    display: none;
+}
+#courseTable tr > *:nth-child(1) {
+    display: none;
+}

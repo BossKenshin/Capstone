@@ -12,7 +12,7 @@
         <a type="button" class="list-group-item list-group-item-action sidebar-btn" href="manage.department.php"><i class="bi bi-diagram-3-fill"></i> Department</a>
         <button type="button" class="list-group-item list-group-item-action sidebar-btn"><i class="bi bi-people-fill"></i> Teacher</button>
         <button type="button" class="list-group-item list-group-item-action sidebar-btn"><i class="bi bi-person-heart"></i> Vice President</button>
-        <button type="button" class="list-group-item list-group-item-action sidebar-btn"><i class="bi bi-info-square"></i> Course</button>
+        <a type="button" class="list-group-item list-group-item-action sidebar-btn" href="manage.course.php" ><i class="bi bi-info-square"></i> Course</a>
         <button type="button" class="list-group-item list-group-item-action sidebar-btn"><i class="bi bi-book-fill"></i> Subject</button>
         <br>
         <hr>

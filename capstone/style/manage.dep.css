@@ -33,13 +33,3 @@
 
 }
 
-
-#departmentTable tbody tr:nth-child(even){
-    background-color: #dedede32;
-
-}
-
-#departmentTable tbody tr:hover{
-    background-color: #19875432;
-    
-    }

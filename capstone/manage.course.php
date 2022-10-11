@@ -13,7 +13,7 @@ include 'dbconnect.php';
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Manage Department</title>
+    <title>Admin Manage Courses</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="style/system.css">
@@ -29,7 +29,7 @@ include 'dbconnect.php';
 <body>
 
 
-    <div class="modal fade" id="newdeptform" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="newCourseForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -39,21 +39,20 @@ include 'dbconnect.php';
                 <div class="modal-body">
 
                     <div class="container">
-                        <label for="deptname">Department Name</label>
-                        <input class="form-control mb-2 newdept" type="text" id="deptname" placeholder="Name..." aria-label="default input example" required>
+                        <label for="deptname">Course Name</label>
+                        <input class="form-control mb-2 newdept" type="text" id="courseName" placeholder="Name..." aria-label="default input example" required>
 
                         <label for="deptabb"> Abbreviation</label>
-                        <input class="form-control mb-2 newdept" type="text" id="deptabb" placeholder="Abbreviation..." aria-label="default input example" required>
+                        <input class="form-control mb-2 newdept" type="text" id="courseAbb" placeholder="Abbreviation..." aria-label="default input example" required>
 
-                        <label for="deptusername"> Username</label>
-                        <input class="form-control mb-2 newdept" type="text" id="deptusername" placeholder="Username here..." aria-label="default input example" required>
-
-                        <label for="deptpassword"> Password</label>
-                        <input class="form-control mb-2 newdept" type="text" id="deptpassword" placeholder="Password here..." aria-label="default input example" required>
+                        <label for="DeptSelect"> Department</label>
+                        <select class="form-select" aria-label="Default select example" id="DeptSelect">
+                        <option selected>Open this select menu</option>
+                        </select>                   
 
                         <br>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="addNewDept">Save</button>
+                        <button type="button" class="btn btn-primary" id="addNewCourse">Save</button>
                     </div>
                 </div>
 
@@ -62,7 +61,8 @@ include 'dbconnect.php';
     </div>
 
 
-    <div class="modal fade" id="updatedeptform" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
+<div class="modal fade" id="updateCourseForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -72,31 +72,28 @@ include 'dbconnect.php';
                 <div class="modal-body">
 
                     <div class="container">
-                    <form action="">
-                        <input type="hidden" name="deptID" id="deptID">
-                        <label for="deptname">Department Name</label>
-                        <input class="form-control mb-2 " type="text" id="newdeptname" placeholder="Name..." aria-label="default input example" required>
+                
+                        <input type="hidden" name="coID" id="coID">
+                        <label for="newCourseName">Department Name</label>
+                        <input class="form-control mb-2 " type="text" id="newCourseName" placeholder="Name..." aria-label="default input example" required>
 
-                        <label for="deptabb"> Abbreviation</label>
-                        <input class="form-control mb-2 " type="text" id="newdeptabb" placeholder="Abbreviation..." aria-label="default input example" required>
+                        <label for="newCourseAbb"> Abbreviation</label>
+                        <input class="form-control mb-2 " type="text" id="newCourseAbb" placeholder="Abbreviation..." aria-label="default input example" required>
 
-                        <label for="deptusername"> Username</label>
-                        <input class="form-control mb-2 " type="text" id="newdeptusername" placeholder="Username here..." aria-label="default input example" required>
-
-                        <label for="deptpassword"> Password</label>
-                        <input class="form-control mb-2 " type="text" id="newdeptpassword" placeholder="Password here..." aria-label="default input example" required>
-
+                        <label for="newDept"> Department</label>
+                        <select class="form-select" aria-label="Default select example" id="newDept">
+                        <option selected>Open this select menu</option>
+                        </select>                            
                         <br>
-                        <button type="button" class="btn btn-secondary" id="closeNewDeptForm" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="updateDeptBtn">Save</button>
-                        </form>
+                        <button type="button" class="btn btn-secondary" id="closeNewCourseForm" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="updateCourseBtn">Save</button>
+                 
                     </div>
                 </div>
 
             </div>
         </div>
     </div>
-
 
     <div class="container-fluid row" id="whole-container">
 
@@ -109,32 +106,28 @@ include 'dbconnect.php';
         <div class="col-10 " id="content">
 
             <div class="container-fluid" id="samp-header">
-                <p class="h4">Manage Departments</p>
+                <p class="h4">Manage Courses</p>
                 <hr>
             </div>
 
             <div class="container-fluid pt-4 pb-3" id="btn-container">
-                <button type="button" class="btn btn-success me-5" data-bs-toggle="modal" data-bs-target="#newdeptform"><i class="bi bi-plus-circle"></i> Department</button>
+                <button type="button" class="btn btn-success me-5" data-bs-toggle="modal" data-bs-target="#newCourseForm" onclick="populateCourseDept('AddCourse', 'new')" ><i class="bi bi-plus-circle"></i> Course</button>
                 <!-- <button class="btn btn-info me-1"><i class="bi bi-file-earmark-spreadsheet-fill" data-toggle="tooltip" data-placement="bottom" title="Import table"></i></button> -->
-                <button class="btn btn-warning" data-toggle="tooltip" data-placement="bottom" title="Export table" onclick="exportTableToExcel('deptTable', 'dept-data')"> <i class="bi bi-printer-fill"></i></button>
+                <button class="btn btn-warning" data-toggle="tooltip" data-placement="bottom" title="Export table" onclick="exportTableToExcel('courseTable', 'course-data')"> <i class="bi bi-printer-fill"></i></button>
 
-                <button class="btn btn-dark float-end" data-toggle="tooltip" id="btn-refresh" data-placement="left" title="Refrest Table"><i class="bi bi-arrow-clockwise"></i></button>
+                <button class="btn btn-dark float-end" data-toggle="tooltip" id="btn-refresh-course" data-placement="left" title="Refrest Table"><i class="bi bi-arrow-clockwise"></i></button>
 
             </div>
 
             <div class="container bg-light " id="box-content">
 
-            <table id="deptTable" class="display text-center" width="100%">
+            <table id="courseTable" class="display text-center" width="100%">
             <thead>
                         <tr>
                             <th >Dept ID</th>
                             <th>Department Name</th>
                             <th>Abbreviation</th>
-                            <th>Username</th>
-                            <th>Password</th>
-                            <th>Courses</th>
-                            <th>Teachers</th>
-                            <th>Students</th>
+                            <th>Department</th>
                             <th></th>
                              <th></th>
                     
