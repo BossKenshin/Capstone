@@ -33,7 +33,7 @@ include 'dbconnect.php';
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">New Department</h1>
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">New Course</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -66,7 +66,7 @@ include 'dbconnect.php';
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Update Department</h1>
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Update Course</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
