@@ -5,9 +5,9 @@ $id = $_GET['id'];
 
 
 
-$delete_teach = "DELETE FROM teacher WHERE teacher_id = '$id' and dept_id != '24' ";
+$delete = "DELETE FROM subject WHERE subject_id = '$id'";
 
-$res = mysqli_query($conn,$delete_teach);
+$res = mysqli_query($conn,$delete);
 
 
 if($res){

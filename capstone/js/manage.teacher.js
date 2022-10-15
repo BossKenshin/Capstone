@@ -1,24 +1,5 @@
-
-
-var table;
-
-var deptData;
-var courseData;
-var teachersData;
-
-var tableRe;
-
-setCourseTable();
 setTeacherTable();
 
-
-
-
-////////////////////////////////////////////////////////////// THIS IS FOR MANAGE COURSES  /////////////////////////////////////////////////////
-
-///////////////////////////////////////////////////// Manage Teachers ///////////////////////////
-
-//seting department table
 function setTeacherTable() {
 
     $(document).ready(function () {
@@ -112,13 +93,6 @@ $('#teacherTable').on('click', 'td.delete', function (e) {
             swalWithBootstrapButtons.fire(
                 'Deleted!',
                 'success'
-            )
-        } else if (
-            /* Read more about handling dismissals below */
-            result.dismiss === Swal.DismissReason.cancel
-        ) {
-            swalWithBootstrapButtons.fire(
-                'Cancelled',
             )
         }
     })

@@ -29,30 +29,23 @@ include 'dbconnect.php';
 <body>
 
 
-<div class="modal fade" id="newCourseForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
+<div class="modal fade" id="newSubjectForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">New Course</h1>
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">New Subject</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
 
                     <div class="container">
-                        <label for="deptname">Course Name</label>
-                        <input class="form-control mb-2 newdept" type="text" id="courseName" placeholder="Name..." aria-label="default input example" required>
-
-                        <label for="deptabb"> Abbreviation</label>
-                        <input class="form-control mb-2 newdept" type="text" id="courseAbb" placeholder="Abbreviation..." aria-label="default input example" required>
-
-                        <label for="DeptSelect"> Department</label>
-                        <select class="form-select" aria-label="Default select example" id="DeptSelect">
-                        <option selected>Open this select menu</option>
-                        </select>                   
+                        <label for="subjectname">Subject Name</label>
+                        <input class="form-control mb-2 newdept" type="text" id="subjectname" placeholder="Name..." aria-label="default input example" required>
 
                         <br>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="addNewCourse">Save</button>
+                        <button type="button" class="btn btn-primary" id="addNewSubject">Save</button>
                     </div>
                 </div>
 
@@ -61,39 +54,33 @@ include 'dbconnect.php';
     </div>
 
 
+    
 
-<div class="modal fade" id="updateCourseForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="updateSubjectForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Update Course</h1>
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">New Subject</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
 
                     <div class="container">
-                
-                        <input type="hidden" name="coID" id="coID">
-                        <label for="newCourseName">Department Name</label>
-                        <input class="form-control mb-2 " type="text" id="newCourseName" placeholder="Name..." aria-label="default input example" required>
+                        <input type="hidden" name="sid" id="sid">
+                        <label for="updateSubjectName">Subject Name</label>
+                        <input class="form-control mb-2 newdept" type="text" id="updateSubjectName" placeholder="Name..." aria-label="default input example" required>
 
-                        <label for="newCourseAbb"> Abbreviation</label>
-                        <input class="form-control mb-2 " type="text" id="newCourseAbb" placeholder="Abbreviation..." aria-label="default input example" required>
-
-                        <label for="newDept"> Department</label>
-                        <select class="form-select" aria-label="Default select example" id="newDept">
-                        <option selected>Open this select menu</option>
-                        </select>                            
                         <br>
-                        <button type="button" class="btn btn-secondary" id="closeNewCourseForm" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="updateCourseBtn">Save</button>
-                 
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="updateSubject">Save</button>
                     </div>
                 </div>
 
             </div>
         </div>
     </div>
+
+
 
     <div class="container-fluid row" id="whole-container">
 
@@ -106,31 +93,29 @@ include 'dbconnect.php';
         <div class="col-10 " id="content">
 
             <div class="container-fluid" id="samp-header">
-                <p class="h4">Manage Courses</p>
+                <p class="h4">Manage Subjects</p>
                 <hr>
             </div>
 
             <div class="container-fluid pt-4 pb-3" id="btn-container">
-                <button type="button" class="btn btn-success me-5" data-bs-toggle="modal" data-bs-target="#newCourseForm" onclick="populateCourseDept('AddCourse', 'new')" ><i class="bi bi-plus-circle"></i> Course</button>
+                <button type="button" class="btn btn-success me-5" data-bs-toggle="modal" data-bs-target="#newSubjectForm" ><i class="bi bi-plus-circle"></i> Subject</button>
                 <!-- <button class="btn btn-info me-1"><i class="bi bi-file-earmark-spreadsheet-fill" data-toggle="tooltip" data-placement="bottom" title="Import table"></i></button> -->
-                <button class="btn btn-warning" data-toggle="tooltip" data-placement="bottom" title="Export table" onclick="exportTableToExcel('courseTable', 'course-data')"> <i class="bi bi-printer-fill"></i></button>
+                <button class="btn btn-warning" data-toggle="tooltip" data-placement="bottom" title="Export table" onclick="exportTableToExcel('subjectTable', 'course-data')"> <i class="bi bi-printer-fill"></i></button>
 
-                <button class="btn btn-dark float-end" data-toggle="tooltip" id="btn-refresh-course" data-placement="left" title="Refrest Table"><i class="bi bi-arrow-clockwise"></i></button>
+                <button class="btn btn-dark float-end" data-toggle="tooltip" id="btn-refresh-subject" data-placement="left" title="Refresh Table"><i class="bi bi-arrow-clockwise"></i></button>
 
             </div>
 
             <div class="container bg-light " id="box-content">
 
-            <table id="courseTable" class="display text-center" width="100%">
+            <table id="subjectTable" class="display text-center" width="100%">
             <thead>
                         <tr>
-                            <th >Dept ID</th>
-                            <th>Department Name</th>
-                            <th>Abbreviation</th>
-                            <th>Department</th>
+                            <th >Subject ID</th>
+                            <th>Subject Name</th>
+                            <th>Assign Teacher</th>
                             <th></th>
-                             <th></th>
-                    
+                            <th></th>
                         </tr>
                     </thead>
 
@@ -153,7 +138,7 @@ include 'dbconnect.php';
 
 
 
-    <script src="js/manage.course.js"></script>
+    <script src="js/manage.subject.js"></script>
     <script src="js/export.table.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>

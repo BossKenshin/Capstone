@@ -13,7 +13,8 @@
         <a type="button" class="list-group-item list-group-item-action sidebar-btn" href="manage.teacher.php"><i class="bi bi-people-fill"></i> Teacher</a>
         <button type="button" class="list-group-item list-group-item-action sidebar-btn"><i class="bi bi-person-heart"></i> Vice President</button>
         <a type="button" class="list-group-item list-group-item-action sidebar-btn" href="manage.course.php" ><i class="bi bi-info-square"></i> Course</a>
-        <button type="button" class="list-group-item list-group-item-action sidebar-btn"><i class="bi bi-book-fill"></i> Subject</button>
+        <a type="button" class="list-group-item list-group-item-action sidebar-btn" href="manage.subject.php"><i class="bi bi-book-fill"></i> Subject</a>
+        <a type="button" class="list-group-item list-group-item-action sidebar-btn" href=""><i class="bi bi-list-columns"></i> Assigned Teachers</a>
         <br>
         <hr>
         <br>
