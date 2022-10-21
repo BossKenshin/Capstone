@@ -13,7 +13,7 @@ include 'dbconnect.php';
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Manage Courses</title>
+    <title>Admin Manage Subjects</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="style/system.css">
@@ -100,7 +100,6 @@ include 'dbconnect.php';
             <div class="container-fluid pt-4 pb-3" id="btn-container">
                 <button type="button" class="btn btn-success me-5" data-bs-toggle="modal" data-bs-target="#newSubjectForm" ><i class="bi bi-plus-circle"></i> Subject</button>
                 <!-- <button class="btn btn-info me-1"><i class="bi bi-file-earmark-spreadsheet-fill" data-toggle="tooltip" data-placement="bottom" title="Import table"></i></button> -->
-                <button class="btn btn-warning" data-toggle="tooltip" data-placement="bottom" title="Export table" onclick="exportTableToExcel('subjectTable', 'course-data')"> <i class="bi bi-printer-fill"></i></button>
 
                 <button class="btn btn-dark float-end" data-toggle="tooltip" id="btn-refresh-subject" data-placement="left" title="Refresh Table"><i class="bi bi-arrow-clockwise"></i></button>
 
@@ -113,7 +112,6 @@ include 'dbconnect.php';
                         <tr>
                             <th >Subject ID</th>
                             <th>Subject Name</th>
-                            <th>Assign Teacher</th>
                             <th></th>
                             <th></th>
                         </tr>

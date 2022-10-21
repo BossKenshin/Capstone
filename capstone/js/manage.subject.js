@@ -15,12 +15,6 @@ function setSubjectTable() {
                         { data: 'subject_name' },
                         {
                             data: 'null',
-                            className: "assign btn-outline-dark",
-                            defaultContent: '<i class="bi bi-person-plus"></i>',
-                            orderable: false
-                        },
-                        {
-                            data: 'null',
                             className: "edit btn-outline-dark",
                             defaultContent: '<i class="bi bi-pencil-square"></i>',
                             orderable: false

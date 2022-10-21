@@ -7,7 +7,7 @@ function setTeacherTable() {
         $.ajax({
             url: "./sql_functions/fetch.teacher.php",
             success: function (data) {
-                teachersData = JSON.parse(data);
+                var teachersData = JSON.parse(data);
                 $('#teacherTable').DataTable({
                     data: teachersData,
                     columns: [
