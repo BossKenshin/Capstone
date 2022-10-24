@@ -1,3 +1,3 @@
 # Capstone
 Capstone: CRMC ONLINE GRADE INFORMATION SYSTEM
-Edited: October 22,2022
+Edited: October 24,2022
