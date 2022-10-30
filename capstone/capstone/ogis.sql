@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 30, 2022 at 06:31 AM
+-- Generation Time: Oct 21, 2022 at 07:46 PM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -128,17 +128,10 @@ CREATE TABLE `student` (
   `student_firstname` varchar(30) NOT NULL,
   `student_lastname` varchar(30) NOT NULL,
   `student_middlename` varchar(30) NOT NULL,
-  `student_deptID` int(11) NOT NULL,
   `student_courseID` int(11) NOT NULL,
+  `student_year` varchar(30) NOT NULL,
   `student_startYear` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `student`
---
-
-INSERT INTO `student` (`student_id`, `student_schoolid`, `student_firstname`, `student_lastname`, `student_middlename`, `student_deptID`, `student_courseID`, `student_startYear`) VALUES
-(1, 'CLR1321412421', 'Mark', 'Erberg', 'Zuck', 5, 1, '2022');
 
 -- --------------------------------------------------------
 
@@ -159,7 +152,6 @@ INSERT INTO `subject` (`subject_id`, `subject_name`) VALUES
 (1, 'Agham'),
 (4, 'demo1'),
 (7, 'fdasdf'),
-(14, 'hehehe'),
 (12, 'math1'),
 (2, 'Mathematics');
 
@@ -276,13 +268,13 @@ ALTER TABLE `department`
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `subject`
 --
 ALTER TABLE `subject`
-  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `teacher`
