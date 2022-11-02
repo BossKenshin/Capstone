@@ -50,7 +50,7 @@ $('#subjectTable').on('click', 'td.edit', function (e) {
 
     // var data = col1 + "\n" + col2 + "\n" + col3;
 
-    $("#updateSubjectForm").modal('show')
+    $("#updateSubjectForm").modal('show');
 
     document.querySelector("#sid").value = col1;
     document.querySelector("#updateSubjectName").value = col2;

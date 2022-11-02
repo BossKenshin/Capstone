@@ -1,10 +1,9 @@
 <?php
 
 include 'dbconnect.php';
-
-
-
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -26,6 +25,114 @@ include 'dbconnect.php';
 
 </head>
 
+
+
+
+
+
+<div class="modal fade" id="assignTeacherForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Assign a Subject to a Teacher</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="container">
+
+                    <label for="chooseDept"> Department</label>
+
+                        <select class="form-select" aria-label="Default select example" id="chooseDept" >
+                        </select>                 
+                        
+                        <label for="chooseTeacher"> Teacher</label>
+                        <select class="form-select" aria-label="Default select example" id="chooseTeacher">
+                        <option selected>Open this select menu</option>
+                        </select>       
+
+                        <label for="chooseSubject"> Subject</label>
+                        <select class="form-select" aria-label="Default select example" id="chooseSubject">
+                        <option selected>Open this select menu</option>
+                        </select>
+
+                        <label for="chooseCourse">For Course</label>
+                        <select class="form-select" aria-label="Default select example" id="chooseCourse">
+                        <option selected>Open this select menu</option>
+                        </select>
+
+
+                        <label for="s_year">School Year</label>
+                        <input class="form-control mb-2 as_teach" type="text" id="s_year" placeholder="School Year..." aria-label="default input example" required>
+
+                        <label for="y_level">Year Level</label>
+                        <input class="form-control mb-2 as_teach" type="number" id="y_level" placeholder="Year Level..." aria-label="default input example" value="1" min="1" max="4" required>
+
+
+                        <br>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="btnAssign">Save</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+    
+<div class="modal fade" id="updateAsssignTeacherForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Update Assign a Subject to a Teacher</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="container">
+
+                    <label for="chooseDeptnew"> Department</label>
+
+                        <select class="form-select" aria-label="Default select example" id="chooseDeptnew">
+                        <option selected>Open this select menu</option>
+                        </select>                 
+                        
+                        <label for="chooseTeachernew"> Teacher</label>
+                        <select class="form-select" aria-label="Default select example" id="chooseTeachernew">
+                        <option selected>Open this select menu</option>
+                        </select>       
+
+                        <label for="chooseSubjectnew"> Subject</label>
+                        <select class="form-select" aria-label="Default select example" id="chooseSubjectnew">
+                        <option selected>Open this select menu</option>
+                        </select>
+
+                        <label for="chooseCoursenew">For Course</label>
+                        <select class="form-select" aria-label="Default select example" id="chooseCoursenew">
+                        <option selected>Open this select menu</option>
+                        </select>
+
+
+                        <label for="s_yearnew">School Year</label>
+                        <input class="form-control mb-2 newdept" type="text" id="s_yearnew" placeholder="School Year..." aria-label="default input example" required>
+
+                        <label for="y_levelnew">Year Level</label>
+                        <input class="form-control mb-2 newdept" type="text" id="y_levelnew" placeholder="Year Level..." aria-label="default input example" required>
+
+
+                        <br>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="btnAssignNew">Save</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 <body>
 
     <div class="container-fluid row" id="whole-container">
@@ -44,7 +151,7 @@ include 'dbconnect.php';
             </div>
 
             <div class="container-fluid pt-4 pb-3" id="btn-container">
-            <button type="button" class="btn btn-success me-5" data-bs-toggle="modal" data-bs-target="#newAssignTeacherForm" ><i class="bi bi-plus-circle"></i> Assign a Teacher</button>
+            <button type="button" class="btn btn-success me-5" data-bs-toggle="modal" data-bs-target="#assignTeacherForm" id="btn-ass-teacher" ><i class="bi bi-plus-circle"></i> Assign a Teacher</button>
 
                 <!-- <button class="btn btn-info me-1"><i class="bi bi-file-earmark-spreadsheet-fill" data-toggle="tooltip" data-placement="bottom" title="Import table"></i></button> -->
 

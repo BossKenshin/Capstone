@@ -11,7 +11,9 @@ function setDeptTable() {
             url: "./sql_functions/fetch.department.php",
             success: function (data) {
 
-                deptData = JSON.parse(data);
+             var deptData = JSON.parse(data);
+
+             console.log(deptData);
 
                 table = $('#deptTable').DataTable({
                     data: deptData,

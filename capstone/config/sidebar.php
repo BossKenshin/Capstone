@@ -8,7 +8,7 @@
         <br>
         <hr>
         <br>
-        <a type="button" class="list-group-item list-group-item-action sidebar-btn"><i class="bi bi-person-fill"></i> Student</a>
+        <a type="button" class="list-group-item list-group-item-action sidebar-btn" href="manage.student.php"><i class="bi bi-person-fill"></i> Student</a>
         <a type="button" class="list-group-item list-group-item-action sidebar-btn" href="manage.department.php"><i class="bi bi-diagram-3-fill"></i> Department</a>
         <a type="button" class="list-group-item list-group-item-action sidebar-btn" href="manage.teacher.php"><i class="bi bi-people-fill"></i> Teacher</a>
         <button type="button" class="list-group-item list-group-item-action sidebar-btn"><i class="bi bi-person-heart"></i> Vice President</button>

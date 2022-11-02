@@ -69,6 +69,7 @@ background-color:#c9c9c9;
 }
 
 #deptTable tr > *:nth-child(1),
+#studentTable tr > *:nth-child(1),
 #courseTable tr > *:nth-child(1),
 #teacherTable tr > *:nth-child(1),
 #subjectTable tr > *:nth-child(1),
