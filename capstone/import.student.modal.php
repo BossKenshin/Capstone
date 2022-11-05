@@ -10,18 +10,16 @@
             <div class="modal-body">
 
                 <div class="row" id="newStudentDiv">
-                    <h5 class="text-success">New Student in the File</h5>
-                    <hr>
-                        <ol id="listOfNew">
+                    <h5 class="text-dark mb-2">New Student in the File</h5>
+                        <ol class="ms-5" id="listOfNew">
                             
                         </ol>
                 </div>
                 <hr>
                 <div class="row" id="existingStudentDiv">
-                <h5 class="text-danger">Existing Student in the File</h5>
-                <hr>
+                <h5 class="text-dark mb-2">Existing Student in the File</h5>
 
-                <ol id="listOfExisting">
+                <ol class="ms-5" id="listOfExisting">
 
                         </ol>
                 </div>

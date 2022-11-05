@@ -540,7 +540,8 @@ $('#studentTable').on('click', 'td.delete', function (e) {
 });
 
 let selectedFile;
-var sidObject;
+var DBstudentObject;
+var newListObject = [];
 
       document
         .getElementById("fileExcel")
@@ -551,16 +552,16 @@ var sidObject;
       document.getElementById("convert").addEventListener("click", () => {
 
         if (selectedFile) {
-            var sidLength;
 
             $.ajax({
                 url: "./sql_functions/get_school_id.php",
                 success: function (data) {
-                    sidObject = JSON.parse(data);
+                    DBstudentObject = JSON.parse(data);
                     
 
 
                     $("#listOfNew").empty();
+                    $("#listOfExisting").empty();
 
 
                     let fileReader = new FileReader();
@@ -572,36 +573,43 @@ var sidObject;
                             let rowObject = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheet]);
         
                            // document.getElementById("listofNew").innerHTML = JSON.stringify(rowObject);
-                            console.log(rowObject);
-                            console.log(sidObject);
+                            // console.log(rowObject);
+                            // console.log(DBstudentObject);
         
         
                             for(var i = 0 ; i < rowObject.length; i++){
         
-                                for(var j=0 ; j<sidObject.length; j++){
+                                for(var j=0 ; j< DBstudentObject.length; j++){
         
-                                    if(rowObject[i].SchoolID != sidObject[j].student_schoolid){
+                                    if(rowObject[i].SchoolID != DBstudentObject[j].student_schoolid){
 
-                                        $("#listOfNew").append($("<li>").text(rowObject[i].Firstname));
+                                         $("#listOfNew").append($("<li>").text(rowObject[i].Firstname));
+                                        // console.log(rowObject[i].Firstname + " is New");
+                                        newListObject.push(rowObject[i]);
+                                       // rowObject.splice(i, 1);
 
-                                        console.log(rowObject[i].Firstname + " is New");
                                     }
                                     else{
+
                                         $("#listOfExisting").append($("<li>").text(rowObject[i].Firstname));
 
-                                        console.log(rowObject[i].Firstname + " is Existing");
-        
+                                        // console.log(rowObject[i].Firstname + " is Existing");
+                                        // console.log(rowObject[i].Firstname + " will be removed from the list");
+
+                                       // rowObject.splice(j, 1);
+                                       DBstudentObject.splice(i, 1);
+
                                     }
         
                                 }
                             }
         
                           
-        
-        
-        
-                         
-        
+                            // console.log(rowObject);
+
+                            // console.log(sidObject);
+                            // console.log(newListObject);
+
                             });
                     }
 
@@ -614,7 +622,3 @@ var sidObject;
       });
     
 
-
-      function fetchSchoolId(){
-       
-      }
