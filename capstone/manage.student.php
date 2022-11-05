@@ -23,11 +23,19 @@ include 'dbconnect.php';
     <script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://unpkg.com/read-excel-file@4.x/bundle/read-excel-file.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.2/xlsx.full.min.js" integrity="sha512-qilAGdDSZ5c0sTjizcSCffmIb8D2rHttMYGUxtI3OFn8lB29BlU2tEUcPesHHLQ2t0Y5TInglWKY6V3GoSK0IA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>  
+
 </head>
 
 <body>
 
+<?php
+
+include 'import.student.modal.php';
+
+
+
+?>
 
     <div class="modal fade" id="newStudentForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -134,7 +142,7 @@ include 'dbconnect.php';
             <div class="container-fluid pt-4 pb-3" id="btn-container">
                 <button type="button" class="btn btn-success me-5" data-bs-toggle="modal" id="btnNewStudentModal" data-bs-target="#newStudentForm"><i class="bi bi-plus-circle"></i> Student</button>
                 <!-- <button class="btn btn-info me-1"><i class="bi bi-file-earmark-spreadsheet-fill" data-toggle="tooltip" data-placement="bottom" title="Import table"></i></button> -->
-                <button class="btn btn-outline-dark me-5" data-toggle="tooltip" data-placement="bottom" title="Import table"> <i class="bi bi-file-earmark-arrow-up-fill"></i></button>
+                <button class="btn btn-outline-dark me-5" data-bs-toggle="modal" data-toggle="tooltip" data-placement="bottom" title="Import table" data-bs-target="#modalForStudentExcel"> <i class="bi bi-file-earmark-arrow-up-fill"></i></button>
                <!-- <button class="btn btn-dark float-end" data-toggle="tooltip" id="btn-refresh" data-placement="left" title="Refrest Table"><i class="bi bi-arrow-clockwise"></i></button> -->
 
 

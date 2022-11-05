@@ -538,3 +538,83 @@ $('#studentTable').on('click', 'td.delete', function (e) {
 
     //alert(data);
 });
+
+let selectedFile;
+var sidObject;
+
+      document
+        .getElementById("fileExcel")
+        .addEventListener("change", (event) => {
+          selectedFile = event.target.files[0];
+        });
+
+      document.getElementById("convert").addEventListener("click", () => {
+
+        if (selectedFile) {
+            var sidLength;
+
+            $.ajax({
+                url: "./sql_functions/get_school_id.php",
+                success: function (data) {
+                    sidObject = JSON.parse(data);
+                    
+
+
+                    $("#listOfNew").empty();
+
+
+                    let fileReader = new FileReader();
+                    fileReader.readAsBinaryString(selectedFile);
+                    fileReader.onload = (event) => {
+                        let data = event.target.result;
+                        let workbook = XLSX.read(data, {type:"binary"});
+                        workbook.SheetNames.forEach( sheet =>{
+                            let rowObject = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheet]);
+        
+                           // document.getElementById("listofNew").innerHTML = JSON.stringify(rowObject);
+                            console.log(rowObject);
+                            console.log(sidObject);
+        
+        
+                            for(var i = 0 ; i < rowObject.length; i++){
+        
+                                for(var j=0 ; j<sidObject.length; j++){
+        
+                                    if(rowObject[i].SchoolID != sidObject[j].student_schoolid){
+
+                                        $("#listOfNew").append($("<li>").text(rowObject[i].Firstname));
+
+                                        console.log(rowObject[i].Firstname + " is New");
+                                    }
+                                    else{
+                                        $("#listOfExisting").append($("<li>").text(rowObject[i].Firstname));
+
+                                        console.log(rowObject[i].Firstname + " is Existing");
+        
+                                    }
+        
+                                }
+                            }
+        
+                          
+        
+        
+        
+                         
+        
+                            });
+                    }
+
+                }
+                });
+
+       
+
+        }
+      });
+    
+
+
+      function fetchSchoolId(){
+       
+      }
