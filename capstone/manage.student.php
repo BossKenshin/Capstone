@@ -142,7 +142,7 @@ include 'import.student.modal.php';
             <div class="container-fluid pt-4 pb-3" id="btn-container">
                 <button type="button" class="btn btn-success me-5" data-bs-toggle="modal" id="btnNewStudentModal" data-bs-target="#newStudentForm"><i class="bi bi-plus-circle"></i> Student</button>
                 <!-- <button class="btn btn-info me-1"><i class="bi bi-file-earmark-spreadsheet-fill" data-toggle="tooltip" data-placement="bottom" title="Import table"></i></button> -->
-                <button class="btn btn-outline-dark me-5" data-bs-toggle="modal" data-toggle="tooltip" data-placement="bottom" title="Import table" data-bs-target="#modalForStudentExcel"> <i class="bi bi-file-earmark-arrow-up-fill"></i></button>
+                <button class="btn btn-outline-dark me-5" data-bs-toggle="modal" data-toggle="tooltip" data-placement="bottom" title="Import table" data-bs-target="#modalForStudentExcel" id="modalExcelImportBtn"> <i class="bi bi-file-earmark-arrow-up-fill"></i></button>
                <!-- <button class="btn btn-dark float-end" data-toggle="tooltip" id="btn-refresh" data-placement="left" title="Refrest Table"><i class="bi bi-arrow-clockwise"></i></button> -->
 
 

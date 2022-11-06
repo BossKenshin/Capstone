@@ -102,7 +102,8 @@ $("#addNewStudent").click(function(){
                $("#mname").val('');
                $("#lname").val('');
                $("#chooseDept").val("0");
-               $("#chooseCourse").val("0");;
+               $("#chooseCourse").val("0");
+
 
            } else {
                Swal.fire({
@@ -541,7 +542,7 @@ $('#studentTable').on('click', 'td.delete', function (e) {
 
 let selectedFile;
 var DBstudentObject;
-var newListObject = [];
+var rowStudentList ;
 
       document
         .getElementById("fileExcel")
@@ -549,19 +550,14 @@ var newListObject = [];
           selectedFile = event.target.files[0];
         });
 
-      document.getElementById("convert").addEventListener("click", () => {
+      document.getElementById("addMultipleStudent").addEventListener("click", () => {
+      //  let rowObject;
+                var dept = $("#chooseDeptImport").val();
+                var course = $("#chooseCourseImport").val();
 
-        if (selectedFile) {
+        if (selectedFile && dept != "" && dept != 0 && course != 0 && course != "") {
 
-            $.ajax({
-                url: "./sql_functions/get_school_id.php",
-                success: function (data) {
-                    DBstudentObject = JSON.parse(data);
-                    
-
-
-                    $("#listOfNew").empty();
-                    $("#listOfExisting").empty();
+          
 
 
                     let fileReader = new FileReader();
@@ -570,55 +566,169 @@ var newListObject = [];
                         let data = event.target.result;
                         let workbook = XLSX.read(data, {type:"binary"});
                         workbook.SheetNames.forEach( sheet =>{
-                            let rowObject = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheet]);
-        
-                           // document.getElementById("listofNew").innerHTML = JSON.stringify(rowObject);
-                            // console.log(rowObject);
-                            // console.log(DBstudentObject);
-        
-        
-                            for(var i = 0 ; i < rowObject.length; i++){
-        
-                                for(var j=0 ; j< DBstudentObject.length; j++){
-        
-                                    if(rowObject[i].SchoolID != DBstudentObject[j].student_schoolid){
-
-                                         $("#listOfNew").append($("<li>").text(rowObject[i].Firstname));
-                                        // console.log(rowObject[i].Firstname + " is New");
-                                        newListObject.push(rowObject[i]);
-                                       // rowObject.splice(i, 1);
-
-                                    }
-                                    else{
-
-                                        $("#listOfExisting").append($("<li>").text(rowObject[i].Firstname));
-
-                                        // console.log(rowObject[i].Firstname + " is Existing");
-                                        // console.log(rowObject[i].Firstname + " will be removed from the list");
-
-                                       // rowObject.splice(j, 1);
-                                       DBstudentObject.splice(i, 1);
-
-                                    }
-        
-                                }
-                            }
-        
-                          
-                            // console.log(rowObject);
-
-                            // console.log(sidObject);
-                            // console.log(newListObject);
-
+                             rowStudentList = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheet]);
                             });
+
+                console.log(rowStudentList);
+
+                
+
+                for(var i=0; i<rowStudentList.length; i++){
+
+                    if(rowStudentList[i].hasOwnProperty("SchoolID")){
+                    $.ajax({
+
+                        url: "./sql_functions/add.student.php",
+                        type: "GET",
+                        data: {
+                            sid     : rowStudentList[i].SchoolID,
+                            sfn     : rowStudentList[i].Firstname,
+                            smn     : rowStudentList[i].Middlename,
+                            sln     : rowStudentList[i].Lastname,
+                            dept    : dept,
+                            course  : course
+                        }
+                    });
+                }
+                else{
+                    Swal.fire({
+                        icon: 'Error',
+                        title: 'Oops...',
+                        text: 'You have selected a wrong file',
+            
+                    })
+                }
+
+                    
+                }
+                    $('#studentTable').DataTable().clear().destroy();
+                    setStudentTable();
+
+                    $("#chooseDeptImport").empty();
+                        $("#chooseDeptImports").empty();
+                    $("#modalForStudentExcel").modal("hide");
+
                     }
 
                 }
-                });
+                else{
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Please fill in the missing details!!',
+            
+                    })
+                }
+            
+        });
 
-       
 
-        }
+
+
+      
+
+function _deptDropdownImport() {
+    $(document).ready(function () {
+        $.ajax({
+            url: "./sql_functions/fetch.department.php",
+            success: function (data) {
+                var result = JSON.parse(data);
+                // alert("done saving data");
+                    var element = document.getElementById("chooseDeptImport");
+
+                    $("#chooseDeptImport").empty();
+
+
+                    let ops = document.createElement("option");
+                    ops.value =  '0';
+                    ops.hidden = true;
+                    ops.innerHTML = "Select Department";
+                    element.appendChild(ops);
+
+                    
+
+                    for (var i = 0; i < result.length; i++) {
+                        let op = document.createElement("option");
+
+
+
+                        if (result[i].dept_name != "Unassigned" && result[i].dept_name != "Resigned") {
+                            op.value = result[i].dept_id;
+                            op.textContent = result[i].dept_name;
+
+                            element.append(op);
+                        }
+
+
+                    }
+            }
+        })
+    });
+}
+
+
+$( "#chooseDeptImport" ).change(function () {
+    $( "#chooseDeptImport option:selected" ).each(function() {
+
+      // state here what happens if the selected option is selected
+      var dept_id = $(this).val();
+      var dept_name = $(this).text();
+
+      //var elementDropdown = document.getElementById("chooseDept");
+
+      _courseDropdownImport(dept_name);
+
+    });
+
+  })
+  .change();
+
+
+  function _courseDropdownImport(department) {
+    $(document).ready(function () {
+        $.ajax({
+            url: "./sql_functions/fetch.course.php",
+            success: function (data) {
+                var result = JSON.parse(data);
+                // alert("done saving data");
+
+
+                var element = document.getElementById("chooseCourseImport");
+
+                $("#chooseCourseImport").empty();
+
+
+                let ops = document.createElement("option");
+                ops.value =  '0';
+                ops.innerHTML = "Choose Course";
+                element.appendChild(ops);
+
+                
+
+                for (var i = 0; i < result.length; i++) {
+                    let op = document.createElement("option");
+
+
+                    if(result[i].dept == department) {
+                        op.value = result[i].course_id;
+                        op.textContent = result[i].course_abbreviation;
+
+                        element.append(op);
+                    
+                    }
+
+                }
+            }
+        })
+    });
+}
+
+      $("#modalExcelImportBtn").click(function(){
+
+        _deptDropdownImport();
+
       });
     
+
+     
 
