@@ -42,6 +42,9 @@ include 'dbconnect.php';
                     <div class="container">
                         <label for="subjectname">Subject Name</label>
                         <input class="form-control mb-2 newdept" type="text" id="subjectname" placeholder="Name..." aria-label="default input example" required>
+                        
+                        <label for="subjectcode">Subject Code</label>
+                        <input class="form-control mb-2 newdept" type="text" id="subjectcode" placeholder="Code..." aria-label="default input example" required>
 
                         <br>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -69,6 +72,9 @@ include 'dbconnect.php';
                         <input type="hidden" name="sid" id="sid">
                         <label for="updateSubjectName">Subject Name</label>
                         <input class="form-control mb-2 newdept" type="text" id="updateSubjectName" placeholder="Name..." aria-label="default input example" required>
+
+                        <label for="updateSubjectCode">Subject Code</label>
+                        <input class="form-control mb-2 newdept" type="text" id="updateSubjectCode" placeholder="Name..." aria-label="default input example" required>
 
                         <br>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -110,7 +116,8 @@ include 'dbconnect.php';
             <table id="subjectTable" class="display text-center" width="100%">
             <thead>
                         <tr>
-                            <th >Subject ID</th>
+                            <th>Subject ID</th>
+                            <th>Subject Code</th>
                             <th>Subject Name</th>
                             <th></th>
                             <th></th>

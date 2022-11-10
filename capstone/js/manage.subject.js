@@ -12,6 +12,7 @@ function setSubjectTable() {
                     data: subjectData,
                     columns: [
                         { data: 'subject_id', },
+                        { data: 'subject_code' },
                         { data: 'subject_name' },
                         {
                             data: 'null',
@@ -37,6 +38,8 @@ function setSubjectTable() {
 
 
 
+ 
+
 
 
 $('#subjectTable').on('click', 'td.edit', function (e) {
@@ -45,6 +48,8 @@ $('#subjectTable').on('click', 'td.edit', function (e) {
 
     var col1 = currentRow.find("td:eq(0)").text(); // get current row 1st TD value
     var col2 = currentRow.find("td:eq(1)").text(); // get current row 2nd TD
+    var col3 = currentRow.find("td:eq(2)").text(); // get current row 3rd TD
+
 
 
 
@@ -53,7 +58,9 @@ $('#subjectTable').on('click', 'td.edit', function (e) {
     $("#updateSubjectForm").modal('show');
 
     document.querySelector("#sid").value = col1;
-    document.querySelector("#updateSubjectName").value = col2;
+    document.querySelector("#updateSubjectCode").value = col2;
+    document.querySelector("#updateSubjectName").value = col3;
+
 
     //alert(data);
 });
@@ -88,7 +95,8 @@ $('#subjectTable').on('click', 'td.delete', function (e) {
             var currentRow = $(this).closest("tr");
 
             var col1 = currentRow.find("td:eq(0)").text(); // get current row 1st TD value
-            var col2 = currentRow.find("td:eq(1)").text(); // get current row 2nd TD value
+            var col2 = currentRow.find("td:eq(1)").text(); // get current row 2nd TD
+            var col3 = currentRow.find("td:eq(2)").text(); // get current row 3rd TD
 
             $.ajax({
                 url: "./sql_functions/delete.subject.php",
@@ -126,7 +134,9 @@ $('#subjectTable').on('click', 'td.delete', function (e) {
 
 $("#addNewSubject").click(function () {
     var ele_input =  document.getElementById("subjectname");
+    var subject_code = document.getElementById("subjectcode");
 
+    var code = subject_code.value;
     var subName = ele_input.value;
 
     if(subName != ""){
@@ -136,7 +146,8 @@ $("#addNewSubject").click(function () {
                 type: "GET",
                 data:
                     {
-                        name: subName
+                        name: subName,
+                        code: code
                     }   
 
 
@@ -152,6 +163,7 @@ $("#addNewSubject").click(function () {
                     setSubjectTable();
 
                     ele_input.value = "";
+                    subject_code.value = "";
 
                     $("#newSubjectForm").modal("hide");
                 }
@@ -186,6 +198,8 @@ $("#updateSubject").click(function(){
 var ele_input = document.getElementById("updateSubjectName");
 var val_subname = ele_input.value;
 
+var subject_code = document.getElementById("updateSubjectCode").value;
+
 var sid = document.getElementById("sid").value;
 
 if(val_subname != ""){
@@ -196,11 +210,9 @@ if(val_subname != ""){
         data: 
             { 
                 id : sid,
-                name: val_subname
+                name: val_subname,
+                code: subject_code
             }
-
-
-
     })
 
     .done(function (data){
@@ -212,6 +224,7 @@ if(val_subname != ""){
             setSubjectTable();
 
             ele_input.value = "";
+            subject_code = "";
 
             $("#updateSubjectForm").modal("hide");
         }

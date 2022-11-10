@@ -15,7 +15,7 @@
 
             <div class="col-sm-6">
             <input type="file" name="fileExcel" id="fileExcel" accept=".xls, .xlsx" />
-                <button class="btn btn-secondary" id="convert">Convert</button>
+                
 
             </div>
             <div class="col-sm-6">
@@ -37,7 +37,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success">Update Students</button>
+                <button type="button" class="btn btn-success" id="updateMultipleStudent">Update Students</button>
                 <button type="button" class="btn btn-primary" id="addMultipleStudent" >Add New Students</button>
             </div>
         </div>

@@ -58,7 +58,7 @@ include 'import.student.modal.php';
                         <input class="form-control mb-2 newdept" type="text" id="lname" placeholder="Lastname..." aria-label="default input example" required>
 
                         <label for="sid">School ID</label>
-                        <input class="form-control mb-2 newdept" type="text" id="sid" placeholder="School ID..." aria-label="default input example" required>
+                        <input class="form-control mb-2 newdept" type="number" id="sid" placeholder="School ID..." aria-label="default input example" required>
                         
                         <label for="chooseDept"> Department</label>
                         <select class="form-select" aria-label="Default select example" id="chooseDept" >
@@ -102,7 +102,7 @@ include 'import.student.modal.php';
                         <input class="form-control mb-2 newdept" type="text" id="updatelname" placeholder="Lastname..." aria-label="default input example" required>
 
                         <label for="updatesid">School ID</label>
-                        <input class="form-control mb-2 newdept" type="text" id="updatesid" placeholder="School ID..." aria-label="default input example" required>
+                        <input class="form-control mb-2 newdept" type="number" id="updatesid" placeholder="School ID..." aria-label="default input example" required>
                         
                         <label for="updatechooseDept"> Department</label>
                         <select class="form-select" aria-label="Default select example" id="updatechooseDept" >
@@ -142,7 +142,7 @@ include 'import.student.modal.php';
             <div class="container-fluid pt-4 pb-3" id="btn-container">
                 <button type="button" class="btn btn-success me-5" data-bs-toggle="modal" id="btnNewStudentModal" data-bs-target="#newStudentForm"><i class="bi bi-plus-circle"></i> Student</button>
                 <!-- <button class="btn btn-info me-1"><i class="bi bi-file-earmark-spreadsheet-fill" data-toggle="tooltip" data-placement="bottom" title="Import table"></i></button> -->
-                <button class="btn btn-outline-dark me-5" data-bs-toggle="modal" data-toggle="tooltip" data-placement="bottom" title="Import table" data-bs-target="#modalForStudentExcel" id="modalExcelImportBtn"> <i class="bi bi-file-earmark-arrow-up-fill"></i></button>
+                <button class="btn btn-outline-dark me-5" data-bs-toggle="modal" data-toggle="tooltip" data-placement="bottom" title="Import Excel" data-bs-target="#modalForStudentExcel" id="modalExcelImportBtn"> <i class="bi bi-file-earmark-arrow-up-fill"></i></button>
                <!-- <button class="btn btn-dark float-end" data-toggle="tooltip" id="btn-refresh" data-placement="left" title="Refrest Table"><i class="bi bi-arrow-clockwise"></i></button> -->
 
 

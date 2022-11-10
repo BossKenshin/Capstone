@@ -601,12 +601,15 @@ var rowStudentList ;
 
                     
                 }
-                    $('#studentTable').DataTable().clear().destroy();
-                    setStudentTable();
-
-                    $("#chooseDeptImport").empty();
-                        $("#chooseDeptImports").empty();
-                    $("#modalForStudentExcel").modal("hide");
+                document.querySelector('#fileExcel').value = '';
+  
+                $("#chooseDeptImport").empty();
+                $("#chooseCourseImport").empty();
+                $("#modalForStudentExcel").modal("hide");
+              
+                $('#studentTable').DataTable().clear().destroy();
+                
+                setStudentTable();
 
                     }
 
@@ -725,10 +728,110 @@ $( "#chooseDeptImport" ).change(function () {
 
       $("#modalExcelImportBtn").click(function(){
 
+        $("#chooseCourseImport").empty();
         _deptDropdownImport();
 
       });
     
 
+
+      ///----------------------------------------------------////////
+
+
+      document.getElementById("updateMultipleStudent").addEventListener("click", () => {
+        //  let rowObject;
+                  var dept = $("#chooseDeptImport").val();
+                  var course = $("#chooseCourseImport").val();
+  
+          if (selectedFile && dept != "" && dept != 0 && course != 0 && course != "") {
+  
+            
+  
+  
+                      let fileReader = new FileReader();
+                      fileReader.readAsBinaryString(selectedFile);
+                      fileReader.onload = (event) => {
+                          let data = event.target.result;
+                          let workbook = XLSX.read(data, {type:"binary"});
+                          workbook.SheetNames.forEach( sheet =>{
+                               rowStudentList = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheet]);
+                              });
+  
+                  console.log(rowStudentList);
+  
+                  
+  
+                  for(var i=0; i<rowStudentList.length; i++){
+  
+                      if(rowStudentList[i].hasOwnProperty("SchoolID")){
+                      $.ajax({
+  
+                          url: "./sql_functions/update.multi.student.php",
+                          type: "GET",
+                          data: {
+                              sid     : rowStudentList[i].SchoolID,
+                              sfn     : rowStudentList[i].Firstname,
+                              smn     : rowStudentList[i].Middlename,
+                              sln     : rowStudentList[i].Lastname,
+                              dept    : dept,
+                              course  : course
+                          }
+                      });
+                  }
+                  else{
+                      Swal.fire({
+                          icon: 'Error',
+                          title: 'Oops...',
+                          text: 'You have selected a wrong file',
+              
+                      })
+                  }
+  
+                      
+                  }
+              
+                      document.querySelector('#fileExcel').value = '';
+  
+                      $("#chooseDeptImport").empty();
+                    $("#chooseCourseImport").empty();
+                      $("#modalForStudentExcel").modal("hide");
+                    
+                      $('#studentTable').DataTable().clear().destroy();
+
+                      setStudentTable();
+
+                      }
+  
+                  }
+                  else{
+                      Swal.fire({
+                          icon: 'error',
+                          title: 'Oops...',
+                          text: 'Please fill in the missing details!!',
+              
+                      })
+                  }
+              
+          });
      
 
+
+          $('#studentTable').on('click', 'td.view', function (e) {
+
+            var currentRow = $(this).closest("tr");
+        
+            var col2 = currentRow.find("td:eq(1)").text(); // get current row 2nd TD
+
+            var col3 = currentRow.find("td:eq(2)").text(); // get current row 3rd TD
+            var col4 = currentRow.find("td:eq(3)").text(); // get current row 4th TD
+            var col5 = currentRow.find("td:eq(4)").text(); // get current row 5th TD
+
+            var fname = col3 + " " + col4 + " " +col5;
+            
+            window.open("view.student.info.php?sid=" + encodeURI(col2)+ "&studentname="  + encodeURI(fname), '_self');
+        
+        
+        
+            //alert(data);
+        });
+        
