@@ -55,7 +55,9 @@ include 'import.student.modal.php';
             </div>
 
             <div class="container bg-light " id="box-content">
-                <p class="h5 m-3 mb-5" id="sid"></p>
+                <p class="h5 m-3" id="sid"></p>
+                <p class="h5 m-3 mb-5" id="_courseYear"></p>
+
 
             <table id="gradesTable" class="display text-center" width="100%">
 

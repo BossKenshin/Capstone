@@ -1,10 +1,12 @@
 const params = new URLSearchParams(window.location.search);
 var student_sid = params.get('sid');
 var fn = params.get('studentname');
+var courseYear = params.get('courseYear');
 
 var student_name = document.getElementById("sid");
 
 student_name.innerHTML = "Student Name: " + fn;
+document.getElementById("_courseYear").innerHTML = "Course & Year: " + courseYear;
 
 _schoolyearDropdown();
 

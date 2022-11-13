@@ -768,14 +768,19 @@ $("#studentTable").on("click", "td.view", function (e) {
   var col3 = currentRow.find("td:eq(2)").text(); // get current row 3rd TD
   var col4 = currentRow.find("td:eq(3)").text(); // get current row 4th TD
   var col5 = currentRow.find("td:eq(4)").text(); // get current row 5th TD
+  var col7 = currentRow.find("td:eq(6)").text(); // get current row 7th TD
+  var col8 = currentRow.find("td:eq(7)").text(); // get current row 8th TD
 
   var fname = col3 + " " + col4 + " " + col5;
+  var cy =  col7 + " " + col8 ;
 
   window.open(
     "view.student.info.php?sid=" +
       encodeURI(col2) +
       "&studentname=" +
-      encodeURI(fname),
+      encodeURI(fname)+
+      "&courseYear="+
+      encodeURI(cy),
     "_self"
   );
 

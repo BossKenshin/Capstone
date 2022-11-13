@@ -136,7 +136,6 @@ include 'dbconnect.php';
             <div class="container-fluid pt-4 pb-3" id="btn-container">
                 <button type="button" class="btn btn-success me-5" data-bs-toggle="modal" data-bs-target="#newTeacherForm" onclick="populateDeptDropdown('addTeacher', 'new')" ><i class="bi bi-plus-circle"></i>Teacher</button>
                 <!-- <button class="btn btn-info me-1"><i class="bi bi-file-earmark-spreadsheet-fill" data-toggle="tooltip" data-placement="bottom" title="Import table"></i></button> -->
-                <button class="btn btn-warning" data-toggle="tooltip" data-placement="bottom" title="Export table" onclick="exportTableToExcel('teacherTable', 'teacher-data')"> <i class="bi bi-printer-fill"></i></button>
 
                 <button class="btn btn-dark float-end" data-toggle="tooltip" id="btn-refresh-teacher" data-placement="left" title="Refrest Table"><i class="bi bi-arrow-clockwise"></i></button>
 
