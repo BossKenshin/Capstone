@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 02, 2022 at 08:19 PM
--- Server version: 10.4.18-MariaDB
--- PHP Version: 8.0.3
+-- Generation Time: Nov 13, 2022 at 02:44 PM
+-- Server version: 10.4.25-MariaDB
+-- PHP Version: 8.0.23
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -119,19 +119,46 @@ INSERT INTO `department` (`dept_id`, `dept_username`, `dept_password`, `dept_nam
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `grades`
+--
+
+CREATE TABLE `grades` (
+  `grades_id` int(11) NOT NULL,
+  `student_id` int(11) NOT NULL,
+  `subject_id` int(11) NOT NULL,
+  `school_year` varchar(100) NOT NULL,
+  `semester` varchar(50) NOT NULL,
+  `grade` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `student`
 --
 
 CREATE TABLE `student` (
   `student_id` int(11) NOT NULL,
-  `student_schoolid` varchar(50) NOT NULL,
+  `student_schoolid` varchar(255) NOT NULL,
   `student_firstname` varchar(30) NOT NULL,
   `student_lastname` varchar(30) NOT NULL,
   `student_middlename` varchar(30) NOT NULL,
-  `student_deptID` int(11) NOT NULL,
-  `student_courseID` int(11) NOT NULL,
+  `student_deptID` varchar(11) NOT NULL,
+  `student_courseID` varchar(11) NOT NULL,
+  `year_level` varchar(50) NOT NULL DEFAULT '1st Year',
   `student_startYear` varchar(30) NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `student`
+--
+
+INSERT INTO `student` (`student_id`, `student_schoolid`, `student_firstname`, `student_lastname`, `student_middlename`, `student_deptID`, `student_courseID`, `year_level`, `student_startYear`) VALUES
+(109, '12341234', 'Jogo', 'Varra', 'Gue', '2', '2', '1st Year', '2022-11-13 18:47:56'),
+(110, '1235454545', 'Kyle ', 'Rosales', 'Perino', '2', '2', '1st Year', '2022-11-13 18:47:56'),
+(111, '12321214124', 'Wew', 'Daf', 'Ge', '5', '12', '4th Year', '2022-11-13 18:47:56'),
+(112, '44332211', 'Jusj', 'Ki', 'Wa', '2', '2', '1st Year', '2022-11-13 18:47:56'),
+(113, '20195281050', 'Christian Lawrence ', 'Rosales', 'Perino', '2', '2', '1st Year', '2022-11-13 18:47:56');
 
 -- --------------------------------------------------------
 
@@ -141,6 +168,7 @@ CREATE TABLE `student` (
 
 CREATE TABLE `subject` (
   `subject_id` int(11) NOT NULL,
+  `subject_code` varchar(50) NOT NULL,
   `subject_name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -148,18 +176,13 @@ CREATE TABLE `subject` (
 -- Dumping data for table `subject`
 --
 
-INSERT INTO `subject` (`subject_id`, `subject_name`) VALUES
-(19, 'aaaa'),
-(1, 'Agham'),
-(16, 'asdfdfdfdf'),
-(15, 'asdff'),
-(4, 'demo1'),
-(7, 'fdasdf'),
-(14, 'hehehe'),
-(17, 'hhhhhh'),
-(18, 'klklkl'),
-(12, 'math1'),
-(2, 'Mathematics');
+INSERT INTO `subject` (`subject_id`, `subject_code`, `subject_name`) VALUES
+(2, 'SC3', 'Science'),
+(3, 'MMW1', 'Mathematics for Modern World'),
+(4, 'FunAcc1', 'Fundamentals of Accounting'),
+(5, 'WebDev01', 'Web Development'),
+(6, 'GE 14', 'World Literature'),
+(7, 'IT ELECT', 'IT Elective ');
 
 -- --------------------------------------------------------
 
@@ -182,7 +205,7 @@ CREATE TABLE `teacher` (
 --
 
 INSERT INTO `teacher` (`teacher_id`, `teacher_username`, `teacher_password`, `teacher_firstname`, `teacher_lastname`, `teacher_middlename`, `dept_id`) VALUES
-(3, 'kyle132', 'kyle132', 'Luke', 'Rosales', 'Perino', '33'),
+(3, 'kyle132', 'kyle132', 'Luke', 'Rosales', 'Perinos', '33'),
 (4, 'demo12', 'demo', 'demo1', 'dmeo', 'demo1', '5'),
 (5, 'clr123', 'clr11', 'Christian Lawrence', 'Rosales', 'Perino', '3'),
 (6, 'asfd', 'asdf', 'Kyle', 'Rosales', 'Perino', '2');
@@ -223,17 +246,26 @@ ALTER TABLE `department`
   ADD UNIQUE KEY `dept_username` (`dept_username`);
 
 --
+-- Indexes for table `grades`
+--
+ALTER TABLE `grades`
+  ADD PRIMARY KEY (`grades_id`),
+  ADD KEY `student_id` (`student_id`);
+
+--
 -- Indexes for table `student`
 --
 ALTER TABLE `student`
-  ADD PRIMARY KEY (`student_id`);
+  ADD PRIMARY KEY (`student_id`),
+  ADD UNIQUE KEY `student_schoolid` (`student_schoolid`);
 
 --
 -- Indexes for table `subject`
 --
 ALTER TABLE `subject`
   ADD PRIMARY KEY (`subject_id`),
-  ADD UNIQUE KEY `subject_name` (`subject_name`);
+  ADD UNIQUE KEY `subject_name` (`subject_name`),
+  ADD UNIQUE KEY `subject_code` (`subject_code`);
 
 --
 -- Indexes for table `teacher`
@@ -268,19 +300,25 @@ ALTER TABLE `course`
 -- AUTO_INCREMENT for table `department`
 --
 ALTER TABLE `department`
-  MODIFY `dept_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `dept_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+
+--
+-- AUTO_INCREMENT for table `grades`
+--
+ALTER TABLE `grades`
+  MODIFY `grades_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
 
 --
 -- AUTO_INCREMENT for table `subject`
 --
 ALTER TABLE `subject`
-  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `teacher`
@@ -293,12 +331,10 @@ ALTER TABLE `teacher`
 --
 
 --
--- Constraints for table `assigned_teachers`
+-- Constraints for table `grades`
 --
-ALTER TABLE `assigned_teachers`
-  ADD CONSTRAINT `assigned_teachers_ibfk_1` FOREIGN KEY (`teacher_id`) REFERENCES `teacher` (`teacher_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `assigned_teachers_ibfk_2` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`),
-  ADD CONSTRAINT `assigned_teachers_ibfk_3` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`subject_id`);
+ALTER TABLE `grades`
+  ADD CONSTRAINT `grades_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`student_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

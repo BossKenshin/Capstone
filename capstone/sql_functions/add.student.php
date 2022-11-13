@@ -9,12 +9,14 @@ $mn = str_replace( "'" ,"''",htmlspecialchars($_GET['smn']));
 $sid = str_replace( "'" ,"''",htmlspecialchars($_GET['sid']));
 $dept = str_replace( "'" ,"''",htmlspecialchars($_GET['dept']));
 $course = str_replace( "'" ,"''",htmlspecialchars($_GET['course']));
+$year = str_replace( "'" ,"''",htmlspecialchars($_GET['year']));
+
 
 
 
 $insert_student = "INSERT INTO `student`(`student_schoolid`, `student_firstname`, `student_lastname`, `student_middlename`,
-                 `student_deptID`, `student_courseID`) 
-                VALUES ('$sid', '$fn','$ln','$mn','$dept','$course')";
+                 `student_deptID` ,`student_courseID`, year_level)   
+                VALUES ('$sid', '$fn','$ln','$mn','$dept','$course', '$year')";
 
 $res = mysqli_query($conn,$insert_student);
 

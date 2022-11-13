@@ -68,6 +68,15 @@ include 'import.student.modal.php';
                         <select class="form-select" aria-label="Default select example" id="chooseCourse">
                         <option selected value="0">Open this select course</option>
                         </select> 
+
+                        <label for="YearLevel"> Year Level</label>
+                        <select class="form-select" aria-label="Default select example" id="YearLevel">
+                        <option selected value="1st Year">1st Year</option>
+                        <option  value="2nd Year">2nd Year</option>
+                        <option  value="3rd Year">3rd Year</option>
+                        <option  value="4th Year">4th Year</option>
+                        </select> 
+
                         <br>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-primary" id="addNewStudent">Save</button>
@@ -112,6 +121,15 @@ include 'import.student.modal.php';
                         <select class="form-select" aria-label="Default select example" id="updatechooseCourse">
                         <option selected value="0">Open this select course</option>
                         </select> 
+
+                        <label for="updateYearLevel"> Year Level</label>
+                        <select class="form-select" aria-label="Default select example" id="updateYearLevel">
+                        <option selected value="1st Year">1st Year</option>
+                        <option  value="2nd Year">2nd Year</option>
+                        <option  value="3rd Year">3rd Year</option>
+                        <option  value="4th Year">4th Year</option>
+                        </select> 
+
                         <br>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-primary" id="updateStudent">Save</button>
@@ -143,7 +161,8 @@ include 'import.student.modal.php';
                 <button type="button" class="btn btn-success me-5" data-bs-toggle="modal" id="btnNewStudentModal" data-bs-target="#newStudentForm"><i class="bi bi-plus-circle"></i> Student</button>
                 <!-- <button class="btn btn-info me-1"><i class="bi bi-file-earmark-spreadsheet-fill" data-toggle="tooltip" data-placement="bottom" title="Import table"></i></button> -->
                 <button class="btn btn-outline-dark me-5" data-bs-toggle="modal" data-toggle="tooltip" data-placement="bottom" title="Import Excel" data-bs-target="#modalForStudentExcel" id="modalExcelImportBtn"> <i class="bi bi-file-earmark-arrow-up-fill"></i></button>
-               <!-- <button class="btn btn-dark float-end" data-toggle="tooltip" id="btn-refresh" data-placement="left" title="Refrest Table"><i class="bi bi-arrow-clockwise"></i></button> -->
+              
+                <button class="btn btn-dark float-end" data-toggle="tooltip" id="btn-refresh" data-placement="left" title="Refrest Table"><i class="bi bi-arrow-clockwise"></i></button>
 
 
             </div>
@@ -160,6 +179,7 @@ include 'import.student.modal.php';
                             <th>Lastname</th>
                             <th>Department</th> 
                             <th>Course</th> 
+                            <th>Year</th> 
                             <th></th>
                             <th></th>
                             <th></th>
