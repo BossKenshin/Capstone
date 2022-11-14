@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 13, 2022 at 02:44 PM
+-- Generation Time: Nov 14, 2022 at 01:30 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.0.23
 
@@ -114,7 +114,8 @@ INSERT INTO `department` (`dept_id`, `dept_username`, `dept_password`, `dept_nam
 (3, 'coe', 'coepass', 'College of Education', 'COE'),
 (5, 'ccs1', 'ccs2', 'College of Computer Studies', 'CCS'),
 (24, 'ua', 'ua', 'Unassigned', 'UA'),
-(33, 'resigned', 'resigned', 'Resigned', 'RE');
+(33, 'resigned', 'resigned', 'Resigned', 'RE'),
+(40, 'admin1', 'admin1', 'College of Criminology', 'COCrim');
 
 -- --------------------------------------------------------
 
@@ -130,6 +131,14 @@ CREATE TABLE `grades` (
   `semester` varchar(50) NOT NULL,
   `grade` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `grades`
+--
+
+INSERT INTO `grades` (`grades_id`, `student_id`, `subject_id`, `school_year`, `semester`, `grade`) VALUES
+(7, 110, 2, '2020-2021', '1', '1.7'),
+(8, 110, 3, '2020-2021', '2', '1.8');
 
 -- --------------------------------------------------------
 
@@ -158,7 +167,11 @@ INSERT INTO `student` (`student_id`, `student_schoolid`, `student_firstname`, `s
 (110, '1235454545', 'Kyle ', 'Rosales', 'Perino', '2', '2', '1st Year', '2022-11-13 18:47:56'),
 (111, '12321214124', 'Wew', 'Daf', 'Ge', '5', '12', '4th Year', '2022-11-13 18:47:56'),
 (112, '44332211', 'Jusj', 'Ki', 'Wa', '2', '2', '1st Year', '2022-11-13 18:47:56'),
-(113, '20195281050', 'Christian Lawrence ', 'Rosales', 'Perino', '2', '2', '1st Year', '2022-11-13 18:47:56');
+(113, '20195281050', 'Christian Lawrence ', 'Rosales', 'Perino', '2', '2', '1st Year', '2022-11-13 18:47:56'),
+(114, '202153154234', 'Luke', 'Kelu', 'Kelu', '3', '3', '2nd Year', '2022-11-13 21:56:24'),
+(120, '217382135', 'Juliana', 'Rosales', 'Mae', '2', '2', '2nd Year', '2022-11-14 14:08:18'),
+(122, '1235554214', 'Mark', 'Caguya', 'Renzo', '2', '2', '2nd Year', '2022-11-14 14:08:18'),
+(123, '1234545454', 'Kuki', 'Parda', 'Lois', '2', '2', '3rd Year', '2022-11-14 14:20:17');
 
 -- --------------------------------------------------------
 
@@ -169,20 +182,19 @@ INSERT INTO `student` (`student_id`, `student_schoolid`, `student_firstname`, `s
 CREATE TABLE `subject` (
   `subject_id` int(11) NOT NULL,
   `subject_code` varchar(50) NOT NULL,
-  `subject_name` varchar(100) NOT NULL
+  `subject_name` varchar(100) NOT NULL,
+  `course_id` int(20) NOT NULL,
+  `year_level` varchar(20) NOT NULL DEFAULT '1st Year',
+  `semester` varchar(20) NOT NULL DEFAULT '1st Semester'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `subject`
 --
 
-INSERT INTO `subject` (`subject_id`, `subject_code`, `subject_name`) VALUES
-(2, 'SC3', 'Science'),
-(3, 'MMW1', 'Mathematics for Modern World'),
-(4, 'FunAcc1', 'Fundamentals of Accounting'),
-(5, 'WebDev01', 'Web Development'),
-(6, 'GE 14', 'World Literature'),
-(7, 'IT ELECT', 'IT Elective ');
+INSERT INTO `subject` (`subject_id`, `subject_code`, `subject_name`, `course_id`, `year_level`, `semester`) VALUES
+(12, 'MMW', 'Mathematics in a Modern Worl', 1, '2nd Year', '2nd Semester'),
+(13, 'ASDF', 'Laughing my ass out', 1, '3rd Year', 'Summer');
 
 -- --------------------------------------------------------
 
@@ -206,9 +218,9 @@ CREATE TABLE `teacher` (
 
 INSERT INTO `teacher` (`teacher_id`, `teacher_username`, `teacher_password`, `teacher_firstname`, `teacher_lastname`, `teacher_middlename`, `dept_id`) VALUES
 (3, 'kyle132', 'kyle132', 'Luke', 'Rosales', 'Perinos', '33'),
-(4, 'demo12', 'demo', 'demo1', 'dmeo', 'demo1', '5'),
 (5, 'clr123', 'clr11', 'Christian Lawrence', 'Rosales', 'Perino', '3'),
-(6, 'asfd', 'asdf', 'Kyle', 'Rosales', 'Perino', '2');
+(6, 'asfd', 'asdf', 'Kyle', 'Rosales', 'Perino', '2'),
+(7, 'Jessi1', 'jessi1', 'Jessie', 'Ortega', 'Ypil', '2');
 
 --
 -- Indexes for dumped tables
@@ -264,7 +276,6 @@ ALTER TABLE `student`
 --
 ALTER TABLE `subject`
   ADD PRIMARY KEY (`subject_id`),
-  ADD UNIQUE KEY `subject_name` (`subject_name`),
   ADD UNIQUE KEY `subject_code` (`subject_code`);
 
 --
@@ -294,37 +305,37 @@ ALTER TABLE `assigned_teachers`
 -- AUTO_INCREMENT for table `course`
 --
 ALTER TABLE `course`
-  MODIFY `course_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `course_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `department`
 --
 ALTER TABLE `department`
-  MODIFY `dept_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `dept_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `grades`
 --
 ALTER TABLE `grades`
-  MODIFY `grades_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `grades_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
+  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
 
 --
 -- AUTO_INCREMENT for table `subject`
 --
 ALTER TABLE `subject`
-  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `teacher`
 --
 ALTER TABLE `teacher`
-  MODIFY `teacher_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `teacher_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables
