@@ -14,6 +14,9 @@ function setSubjectTable() {
                         { data: 'subject_id', },
                         { data: 'subject_code' },
                         { data: 'subject_name' },
+                        { data: 'course' },
+                        { data: 'year_level'},
+                        { data: 'semester' },
                         {
                             data: 'null',
                             className: "edit btn-outline-dark",
@@ -251,29 +254,19 @@ else{
 })
 
 
-
-
 $('#subjectTable').on('click', 'td.delete', function (e) {
-    const swalWithBootstrapButtons = Swal.mixin({
-        customClass: {
-            confirmButton: 'btn btn-success',
-            cancelButton: 'btn btn-danger'
-        },
-        buttonsStyling: false
-    })
+   
 
-
-
-    swalWithBootstrapButtons.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Yes, delete it!',
-        cancelButtonText: 'No, cancel!',
-        reverseButtons: true
-    }).then((result) => {
-        if (result.isConfirmed) {
+Swal.fire({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!'
+  }).then((result) => {
+    if (result.isConfirmed) {
 
             var currentRow = $(this).closest("tr");
 
@@ -302,13 +295,275 @@ $('#subjectTable').on('click', 'td.delete', function (e) {
                 });
 
 
-            swalWithBootstrapButtons.fire(
-                'Deleted!',
-                'success'
-            )
-        }
-    })
+                Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                  )
+                }
+              })
 
 
     //alert(data);
 });
+
+
+
+$("#modalExcelImportBtn").click(function () {
+
+  $("#chooseCourseImport").empty();
+
+  _deptDropdownImport();
+});
+
+
+
+function _deptDropdownImport() {
+    $(document).ready(function () {
+      $.ajax({
+        url: "./sql_functions/fetch.department.php",
+        success: function (data) {
+          var result = JSON.parse(data);
+          // alert("done saving data");
+          var element = document.getElementById("chooseDeptImport");
+  
+          $("#chooseDeptImport").empty();
+  
+          let ops = document.createElement("option");
+          ops.value = "0";
+          ops.hidden = true;
+          ops.innerHTML = "Select Department";
+          element.appendChild(ops);
+  
+          for (var i = 0; i < result.length; i++) {
+            let op = document.createElement("option");
+  
+            if (
+              result[i].dept_name != "Unassigned" &&
+              result[i].dept_name != "Resigned"
+            ) {
+              op.value = result[i].dept_id;
+              op.textContent = result[i].dept_name;
+  
+              element.append(op);
+            }
+          }
+        },
+      });
+    });
+  }
+  
+
+
+$("#chooseDeptImport")
+.change(function () {
+  $("#chooseDeptImport option:selected").each(function () {
+    // state here what happens if the selected option is selected
+    var dept_id = $(this).val();
+    var dept_name = $(this).text();
+
+    //var elementDropdown = document.getElementById("chooseDept");
+
+    _courseDropdownImport(dept_name);
+  });
+})
+.change();
+
+
+function _courseDropdownImport(department) {
+$(document).ready(function () {
+  $.ajax({
+    url: "./sql_functions/fetch.course.php",
+    success: function (data) {
+      var result = JSON.parse(data);
+      // alert("done saving data");
+
+      var element = document.getElementById("chooseCourseImport");
+
+      $("#chooseCourseImport").empty();
+
+      let ops = document.createElement("option");
+      ops.value = "0";
+      ops.innerHTML = "Choose Course";
+      element.appendChild(ops);
+
+      for (var i = 0; i < result.length; i++) {
+        let op = document.createElement("option");
+
+        if (result[i].dept == department) {
+          op.value = result[i].course_id;
+          op.textContent = result[i].course_abbreviation;
+
+          element.append(op);
+        }
+      }
+    },
+  });
+});
+}
+
+/////////////////////////////-----------------------------------/////////////////
+
+
+let selectedFile;
+var DBstudentObject;
+var rowSubjectList;
+
+document.getElementById("fileExcel").addEventListener("change", (event) => {
+  selectedFile = event.target.files[0];
+});
+
+document.getElementById("addSubject").addEventListener("click", () => {
+  //  let rowObject;
+  var dept = $("#chooseDeptImport").val();
+  var course = $("#chooseCourseImport").val();
+
+  if (selectedFile && dept != "" && dept != 0 && course != 0 && course != "") {
+    let fileReader = new FileReader();
+    fileReader.readAsBinaryString(selectedFile);
+    fileReader.onload = (event) => {
+      let data = event.target.result;
+      let workbook = XLSX.read(data, { type: "binary" });
+      workbook.SheetNames.forEach((sheet) => {
+        rowSubjectList = XLSX.utils.sheet_to_row_object_array(
+          workbook.Sheets[sheet]
+        );
+      });
+
+      var regExp = /[a-zA-Z]/;
+      var len = rowSubjectList.length;
+      var _hasrun = false;
+
+      console.log(rowSubjectList);
+
+      for (var i = 0; i < rowSubjectList.length; i++) {
+        if (rowSubjectList[i].hasOwnProperty("Code") && rowSubjectList[i].hasOwnProperty("Subject")) {
+            $.ajax({
+              url: "./sql_functions/add.subject.php",
+              type: "GET",
+              data: {
+                code:    rowSubjectList[i].Code,
+                subject: rowSubjectList[i].Subject,
+                year:    rowSubjectList[i].Year,
+                sem      :rowSubjectList[i].Semester,
+                course:  course
+              }
+            }).done(function() {
+
+                if(i = len){
+                   
+                    if(_hasrun === false){
+                        $("#subjectTable").DataTable().clear().destroy();
+                        setSubjectTable();
+                         _hasrun = true;
+                    }
+                }
+              });
+
+        } else {
+          Swal.fire({
+            icon: "Error",
+            title: "Oops...",
+            text: "You have selected a wrong file",
+          });
+        }
+      }
+      document.querySelector("#fileExcel").value = "";
+
+      $("#chooseDeptImport").empty();
+      $("#chooseCourseImport").empty();
+
+
+      $("#modalForSubjectExcel").modal("hide");
+
+     
+    };
+  } else {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Please fill out the missing details!!",
+    });
+  }
+});
+
+/////////////////////////////-----------------------------------/////////////////
+
+
+document.getElementById("fileExcel").addEventListener("change", (event) => {
+    selectedFile = event.target.files[0];
+  });
+  
+  document.getElementById("updateMultiSubject").addEventListener("click", () => {
+    //  let rowObject;
+    var dept = $("#chooseDeptImport").val();
+    var course = $("#chooseCourseImport").val();
+  
+    if (selectedFile && dept != "" && dept != 0 && course != 0 && course != "") {
+      let fileReader = new FileReader();
+      fileReader.readAsBinaryString(selectedFile);
+      fileReader.onload = (event) => {
+        let data = event.target.result;
+        let workbook = XLSX.read(data, { type: "binary" });
+        workbook.SheetNames.forEach((sheet) => {
+          rowSubjectList = XLSX.utils.sheet_to_row_object_array(
+            workbook.Sheets[sheet]
+          );
+        });
+  
+        var regExp = /[a-zA-Z]/;
+        var len = rowSubjectList.length;
+        var _hasrun = false;
+  
+        console.log(rowSubjectList);
+  
+        for (var i = 0; i < rowSubjectList.length; i++) {
+          if (rowSubjectList[i].hasOwnProperty("Code") && rowSubjectList[i].hasOwnProperty("Subject")) {
+              $.ajax({
+                url: "./sql_functions/update.multi.subject.php",
+                type: "GET",
+                data: {
+                  code:    rowSubjectList[i].Code,
+                  subject: rowSubjectList[i].Subject,
+                  year:    rowSubjectList[i].Year,
+                  sem      :rowSubjectList[i].Semester,
+                  course:  course
+                }
+              }).done(function() {
+  
+                  if(i = len){
+                     
+                      if(_hasrun === false){
+                          $("#subjectTable").DataTable().clear().destroy();
+                          setSubjectTable();
+                           _hasrun = true;
+                      }
+                  }
+                });
+  
+          } else {
+            Swal.fire({
+              icon: "Error",
+              title: "Oops...",
+              text: "You have selected a wrong file",
+            });
+          }
+        }
+        document.querySelector("#fileExcel").value = "";
+  
+        $("#chooseDeptImport").empty();
+        $("#chooseCourseImport").empty();
+  
+  
+        $("#modalForSubjectExcel").modal("hide");
+  
+       
+      };
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please fill out the missing details!!",
+      });
+    }
+  });

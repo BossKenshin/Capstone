@@ -2,7 +2,7 @@
 
 include 'dbconnect.php';
 
-
+include 'import.subject.modal.php';
 
 ?>
 
@@ -23,6 +23,8 @@ include 'dbconnect.php';
     <script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.2/xlsx.full.min.js" integrity="sha512-qilAGdDSZ5c0sTjizcSCffmIb8D2rHttMYGUxtI3OFn8lB29BlU2tEUcPesHHLQ2t0Y5TInglWKY6V3GoSK0IA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>  
+
 
 </head>
 
@@ -107,6 +109,8 @@ include 'dbconnect.php';
                 <button type="button" class="btn btn-success me-5" data-bs-toggle="modal" data-bs-target="#newSubjectForm" ><i class="bi bi-plus-circle"></i> Subject</button>
                 <!-- <button class="btn btn-info me-1"><i class="bi bi-file-earmark-spreadsheet-fill" data-toggle="tooltip" data-placement="bottom" title="Import table"></i></button> -->
 
+                <button class="btn btn-outline-dark me-5" data-bs-toggle="modal" data-toggle="tooltip" data-placement="bottom" title="Import Excel" data-bs-target="#modalForSubjectExcel" id="modalExcelImportBtn"> <i class="bi bi-file-earmark-arrow-up-fill"></i></button>
+
                 <button class="btn btn-dark float-end" data-toggle="tooltip" id="btn-refresh-subject" data-placement="left" title="Refresh Table"><i class="bi bi-arrow-clockwise"></i></button>
 
             </div>
@@ -118,7 +122,10 @@ include 'dbconnect.php';
                         <tr>
                             <th>Subject ID</th>
                             <th>Subject Code</th>
-                            <th>Subject Name</th>
+                            <th>Subject</th>
+                            <th>Course</th>
+                            <th>Year Level</th>
+                            <th>Semester</th>
                             <th></th>
                             <th></th>
                         </tr>

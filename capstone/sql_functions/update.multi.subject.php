@@ -11,13 +11,11 @@ $sem =  str_replace( "'" ,"''",htmlspecialchars($_GET['sem']));
 
 
 
+$update_subject = "UPDATE subject SET subject_name='$name', course_id = '$course', year_level = '$year', semester = '$sem' WHERE subject_code = '$code'";
 
 
 
-$inset_sub = "INSERT INTO `subject` (subject_name, subject_code, course_id, year_level, semester) 
-VALUES ('$name', '$code','$course','$year', '$sem')";
-
-$res = mysqli_query($conn,$inset_sub);
+$res = mysqli_query($conn,$update_subject);
 
 
 if($res){
