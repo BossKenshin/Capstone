@@ -2,29 +2,28 @@
 
 include '/xampp/htdocs/capstone/dbconnect.php';
 
-$sid = str_replace( "'" ,"''",htmlspecialchars($_GET['stuid']));
-$sy = str_replace( "'" ,"''",htmlspecialchars($_GET['sy']));
-$sem = str_replace( "'" ,"''",htmlspecialchars($_GET['sem']));
+
+$y = $_GET['year'];
+$s = $_GET['sem'];
+$id = $_GET['id'];
+$course = $_GET['course'];
 
 
+$fetch_grades= "SELECT subject.subject_code, grades.grade FROM `grades`
+INNER JOIN subject ON grades.subject_id = subject.subject_id
+INNER JOIN course ON grades.course_id = course.course_id
+WHERE subject.semester = '$s' AND subject.year_level = '$y' AND grades.student_id = '$id' AND course.course_abbreviation = '$course'";
 
-$grades_info = "SELECT CONCAT(student_firstname,' ', student_middlename,' ',student_lastname) as fullname,
-                subject.subject_name,subject.subject_code, school_year, semester, grade FROM grades
-                INNER JOIN student ON grades.student_id = student.student_id
-                INNER JOIN subject ON grades.subject_id = subject.subject_id
-                WHERE student.student_schoolid = '$sid'AND school_year = '$sy' AND semester = '$sem'";
 
-$res = mysqli_query($conn,$grades_info);
+$res = mysqli_query($conn,$fetch_grades);
 
-$course_array = array();
+$grades = array();
 
 while ($row = mysqli_fetch_assoc($res)) {
-    $course_array[] = $row;
+    $grades[] = $row;
 }
 
 
- echo json_encode($course_array);
-
-
+ echo json_encode($grades);
 
 ?>

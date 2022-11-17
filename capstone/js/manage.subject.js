@@ -14,6 +14,7 @@ function setSubjectTable() {
                         { data: 'subject_id', },
                         { data: 'subject_code' },
                         { data: 'subject_name' },
+                        { data: 'dept_abb'},
                         { data: 'course' },
                         { data: 'year_level'},
                         { data: 'semester' },
@@ -49,15 +50,20 @@ $('#subjectTable').on('click', 'td.edit', function (e) {
 
     var currentRow = $(this).closest("tr");
 
-    var col1 = currentRow.find("td:eq(0)").text(); // get current row 1st TD value
+    var col1 = currentRow.find("td:eq(0)").text(); // get current row 1st TD 
     var col2 = currentRow.find("td:eq(1)").text(); // get current row 2nd TD
     var col3 = currentRow.find("td:eq(2)").text(); // get current row 3rd TD
+    var col4 = currentRow.find("td:eq(3)").text(); // get current row 4th TD 
+    var col5 = currentRow.find("td:eq(4)").text(); // get current row 5th TD
+    var col6 = currentRow.find("td:eq(5)").text(); // get current row 6th TD
+    var col7 = currentRow.find("td:eq(6)").text(); // get current row 7th TD
+
+ 
 
 
 
-
+    populateDeptDropdown(col5, col4);
     // var data = col1 + "\n" + col2 + "\n" + col3;
-
     $("#updateSubjectForm").modal('show');
 
     document.querySelector("#sid").value = col1;
@@ -65,8 +71,85 @@ $('#subjectTable').on('click', 'td.edit', function (e) {
     document.querySelector("#updateSubjectName").value = col3;
 
 
+
+
+    $("#chooseUpdateYear").val(col6).change();
+    $("#chooseUpdateSem").val(col7).change();
+
+
     //alert(data);
 });
+
+
+
+function populateDeptDropdown(course, oldDept) {
+  $(document).ready(function () {
+    $.ajax({
+      url: "./sql_functions/fetch.department.php",
+      success: function (data) {
+        var result = JSON.parse(data);
+        // alert("done saving data");
+
+        var deID;
+        var element = document.getElementById("chooseUpdateDept");
+
+        $("#chooseUpdateDept").empty();
+
+        for (var i = 0; i < result.length; i++) {
+          let op = document.createElement("option");
+
+          if (
+            result[i].dept_name != "Unassigned" &&
+            result[i].dept_name != "Resigned"
+          ) {
+            op.value = result[i].dept_id;
+            op.textContent = result[i].dept_abbreviation;
+
+            if (oldDept == result[i].dept_abbreviation) {
+              deID = result[i].dept_id;
+              op.setAttribute("selected", "selected");
+            }
+
+            element.append(op);
+          }
+        }
+
+        populateCourseDropdown(course, deID);
+      },
+    });
+  });
+}
+
+function populateCourseDropdown(course, id) {
+  $(document).ready(function () {
+    $.ajax({
+      url: "./sql_functions/fetch.course.php",
+      success: function (data) {
+        var result = JSON.parse(data);
+        // alert("done saving data");
+
+        var element = document.getElementById("chooseUpdateCourse");
+
+        $("#chooseUpdateCourse").empty();
+
+        for (var i = 0; i < result.length; i++) {
+          let op = document.createElement("option");
+
+          if (result[i].dept_id == id) {
+            op.value = result[i].course_id;
+            op.textContent = result[i].course_abbreviation;
+            if (course == result[i].course_abbreviation) {
+              op.setAttribute("selected", "selected");
+            }
+
+            element.append(op);
+          }
+        }
+      },
+    });
+  });
+}
+
 
 
 
@@ -82,16 +165,16 @@ $('#subjectTable').on('click', 'td.delete', function (e) {
 
 
 
-    swalWithBootstrapButtons.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Yes, delete it!',
-        cancelButtonText: 'No, cancel!',
-        reverseButtons: true
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
-        if (result.isConfirmed) {
+      if (result.isConfirmed) {
 
 
 
@@ -138,6 +221,10 @@ $('#subjectTable').on('click', 'td.delete', function (e) {
 $("#addNewSubject").click(function () {
     var ele_input =  document.getElementById("subjectname");
     var subject_code = document.getElementById("subjectcode");
+    var course = document.getElementById("chooseCourse").value;
+    var year = document.getElementById("chooseYear").value;
+    var sem = document.getElementById("chooseSem").value;
+
 
     var code = subject_code.value;
     var subName = ele_input.value;
@@ -149,8 +236,11 @@ $("#addNewSubject").click(function () {
                 type: "GET",
                 data:
                     {
-                        name: subName,
-                        code: code
+                        subject: subName,
+                        code: code,
+                        course: course,
+                        year: year,
+                        sem: sem,
                     }   
 
 
@@ -205,6 +295,10 @@ var subject_code = document.getElementById("updateSubjectCode").value;
 
 var sid = document.getElementById("sid").value;
 
+var course = document.getElementById("chooseUpdateCourse").value;
+var year = document.getElementById("chooseUpdateYear").value;
+var sem = document.getElementById("chooseUpdateSem").value;
+
 if(val_subname != ""){
 
     $.ajax({
@@ -214,7 +308,11 @@ if(val_subname != ""){
             { 
                 id : sid,
                 name: val_subname,
-                code: subject_code
+                code: subject_code,
+                course: course,
+                year: year,
+                sem: sem,
+                
             }
     })
 
@@ -315,6 +413,7 @@ $("#modalExcelImportBtn").click(function () {
 
   _deptDropdownImport();
 });
+
 
 
 
@@ -567,3 +666,119 @@ document.getElementById("fileExcel").addEventListener("change", (event) => {
       });
     }
   });
+
+
+  
+$("#btn-new-subject").click(function () {
+
+  $("#chooseCourse").empty();
+
+  _deptDropdown();
+});
+
+
+function _deptDropdown() {
+  $(document).ready(function () {
+    $.ajax({
+      url: "./sql_functions/fetch.department.php",
+      success: function (data) {
+        var result = JSON.parse(data);
+        // alert("done saving data");
+        var element = document.getElementById("chooseDept");
+
+        $("#chooseDept").empty();
+
+        let ops = document.createElement("option");
+        ops.value = "0";
+        ops.hidden = true;
+        ops.innerHTML = "Select Department";
+        element.appendChild(ops);
+
+        for (var i = 0; i < result.length; i++) {
+          let op = document.createElement("option");
+
+          if (
+            result[i].dept_name != "Unassigned" &&
+            result[i].dept_name != "Resigned"
+          ) {
+            op.value = result[i].dept_id;
+            op.textContent = result[i].dept_name;
+
+            element.append(op);
+          }
+        }
+      },
+    });
+  });
+}
+
+
+
+$("#chooseDept")
+.change(function () {
+$("#chooseDept option:selected").each(function () {
+  // state here what happens if the selected option is selected
+  var dept_id = $(this).val();
+  var dept_name = $(this).text();
+
+  //var elementDropdown = document.getElementById("chooseDept");
+
+  _courseDropdown(dept_name);
+});
+})
+.change();
+
+
+function _courseDropdown(department) {
+$(document).ready(function () {
+$.ajax({
+  url: "./sql_functions/fetch.course.php",
+  success: function (data) {
+    var result = JSON.parse(data);
+    // alert("done saving data");
+
+    var element = document.getElementById("chooseCourse");
+
+    $("#chooseCourse").empty();
+
+    let ops = document.createElement("option");
+    ops.value = "0";
+    ops.innerHTML = "Choose Course";
+    element.appendChild(ops);
+
+    for (var i = 0; i < result.length; i++) {
+      let op = document.createElement("option");
+
+      if (result[i].dept == department) {
+        op.value = result[i].course_id;
+        op.textContent = result[i].course_abbreviation;
+
+        element.append(op);
+      }
+    }
+  },
+});
+});
+}
+
+
+
+
+
+
+
+
+$("#chooseUpdateDept")
+.change(function () {
+$("#chooseUpdateDept option:selected").each(function () {
+  // state here what happens if the selected option is selected
+  var dept_id = $(this).val();
+  var dept_name = $(this).text();
+
+  //var elementDropdown = document.getElementById("chooseDept");
+
+  _updatecourseDropdown(dept_name);
+});
+})
+.change();
+

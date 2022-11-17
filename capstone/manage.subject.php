@@ -19,7 +19,6 @@ include 'import.subject.modal.php';
     <link rel="stylesheet" href="style/system.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css">
-    </style>
     <script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -47,6 +46,33 @@ include 'import.subject.modal.php';
                         
                         <label for="subjectcode">Subject Code</label>
                         <input class="form-control mb-2 newdept" type="text" id="subjectcode" placeholder="Code..." aria-label="default input example" required>
+                        
+                        <label for="chooseDept"> Department</label>
+                        <select class="form-select" aria-label="Default select example" id="chooseDept" >
+                        </select>                 
+
+                        <label for="chooseCourse"> Course</label>
+                        <select class="form-select" aria-label="Default select example" id="chooseCourse">
+                        <option selected value="0">Open this select course</option>
+                        </select>
+
+                        
+                        <label for="chooseYear">Year Level</label>
+                        <select  id="chooseYear" class="form-select">
+                            <option value="1st" class="optionYear">1st</option>
+                            <option value="2nd" class="optionYear">2nd</option>
+                            <option value="3rd" class="optionYear">3rd</option>
+                            <option value="4th" class="optionYear">4th</option>
+
+                        </select>
+
+                        <label for="chooseSem">Semester</label>
+                        <select  id="chooseSem" class="form-select">
+                            <option value="1st" class="optionSem">1st</option>
+                            <option value="2nd" class="optionSem">2nd</option>
+                            <option value="Summer" class="optionSem">Summer</option>
+
+                        </select>
 
                         <br>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -77,7 +103,35 @@ include 'import.subject.modal.php';
 
                         <label for="updateSubjectCode">Subject Code</label>
                         <input class="form-control mb-2 newdept" type="text" id="updateSubjectCode" placeholder="Name..." aria-label="default input example" required>
+                        
+                        <label for="chooseUpdateDept"> Department</label>
+                        <select class="form-select" aria-label="Default select example" id="chooseUpdateDept" >
+                        </select>      
+                        
 
+                        <label for="chooseUpdateCourse"> Course</label>
+                        <select class="form-select" aria-label="Default select example" id="chooseUpdateCourse">
+                        <option selected value="0">Open this select course</option>
+                        </select>
+
+
+                        <label for="chooseUpdateYear">Year Level</label>
+                        <select id="chooseUpdateYear" class="form-select">
+                            <option value="1st" class="optionYear">1st</option>
+                            <option value="2nd" class="optionYear">2nd</option>
+                            <option value="3rd" class="optionYear">3rd</option>
+                            <option value="4th" class="optionYear">4th</option>
+
+                        </select>
+
+                        <label for="chooseUpdateSem">Semester</label>
+                        <select id="chooseUpdateSem" class="form-select">
+                            <option value="1st" class="optionSem">1st</option>
+                            <option value="2nd" class="optionSem">2nd</option>
+                            <option value="Summer" class="optionSem">Summer</option>
+
+                        </select>
+                       
                         <br>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-primary" id="updateSubject">Save</button>
@@ -106,7 +160,7 @@ include 'import.subject.modal.php';
             </div>
 
             <div class="container-fluid pt-4 pb-3" id="btn-container">
-                <button type="button" class="btn btn-success me-5" data-bs-toggle="modal" data-bs-target="#newSubjectForm" ><i class="bi bi-plus-circle"></i> Subject</button>
+                <button type="button" class="btn btn-success me-5" data-bs-toggle="modal" id="btn-new-subject" data-bs-target="#newSubjectForm" ><i class="bi bi-plus-circle"></i> Subject</button>
                 <!-- <button class="btn btn-info me-1"><i class="bi bi-file-earmark-spreadsheet-fill" data-toggle="tooltip" data-placement="bottom" title="Import table"></i></button> -->
 
                 <button class="btn btn-outline-dark me-5" data-bs-toggle="modal" data-toggle="tooltip" data-placement="bottom" title="Import Excel" data-bs-target="#modalForSubjectExcel" id="modalExcelImportBtn"> <i class="bi bi-file-earmark-arrow-up-fill"></i></button>
@@ -123,6 +177,7 @@ include 'import.subject.modal.php';
                             <th>Subject ID</th>
                             <th>Subject Code</th>
                             <th>Subject</th>
+                            <th>Department</th>
                             <th>Course</th>
                             <th>Year Level</th>
                             <th>Semester</th>
@@ -151,7 +206,6 @@ include 'import.subject.modal.php';
 
 
     <script src="js/manage.subject.js"></script>
-    <script src="js/export.table.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>

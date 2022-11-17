@@ -20,7 +20,6 @@ include 'dbconnect.php';
     <link rel="stylesheet" href="style/system.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css">
-    </style>
     <script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -39,6 +38,16 @@ include 'import.student.modal.php';
 ?>
 
    
+<template id="template" >
+<tr id="data-row">
+    <td class="data" id="subCode">asdf</td>
+    <td class="data" id="subject">asdf</td>
+
+    <td class="data" id="Grade">NG</td>
+</tr>
+
+</template>
+
     <div class="container-fluid row" id="whole-container">
 
         <div class="col-2" id="sidebar">
@@ -59,28 +68,29 @@ include 'import.student.modal.php';
                 <p class="h5 m-3 mb-5" id="_courseYear"></p>
 
 
-            <table id="gradesTable" class="display text-center" width="100%">
+            <table id="gradesTable" class="table table-striped display text-center" width="100%">
 
             <div class="container row mb-5">
 
             <div class="col-2">
-                 <label for="_schoolyear"> School Year</label>
-                        <select class="form-select" aria-label="Default select example" id="_schoolyear" >
-                        </select>   
+            <select name="year" id="yearDropdown" class="form-select form-select mb-3 ">
+    <option value="1st" class="yearOption">1st Year</option>
+    <option value="2nd"  class="yearOption">2nd Year</option>
+    <option value="3rd" class="yearOption">3rd Year</option>
+    <option value="4th" class="yearOption">4th Year</option>
+</select>
             </div>
 
             <div class="col-2">
-                <label for="_semester">Semester</label>
-                        <select class="form-select " aria-label="Default select example" id="_semester" >
-                            <option value="1" selected>1st Semester</option>
-                            <option value="2" >2nd Semester</option>
-                            <option value="3">Summer</option>
-
-                        </select>     
+            <select name="sem" id="semDropdown" class="form-select form-select mb-3">
+    <option value="1st " class="semOption">1st </option>
+    <option value="2nd " class="semOption">2nd </option>
+    <option value="Summer" class="semOption">Summer</option>
+</select>
                  </div>
 
-                 <div class="col-2 mt-4">
-                    <button class="btn btn-primary" id="_filtergrades">Filter</button>
+                 <div class="col-2 ">
+                    <button class="btn btn-primary" id="_filtergrades" onclick="loadSubjects()">Filter</button>
                  </div>
             </div>
 
@@ -91,15 +101,15 @@ include 'import.student.modal.php';
             <thead>
                         <tr>
                             <th>Subject Code</th>
-                            <th>Subject Name</th> 
+                            <th>Subject</th>
                             <th>Final Grade</th>
+                    
                         </tr>
                     </thead>
 
                     <tbody>
                     
                     </tbody>
-
 
             </table>
 

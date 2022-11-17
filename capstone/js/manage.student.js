@@ -428,24 +428,24 @@ $("#updateStudent").click(function () {
 $("#studentTable").on("click", "td.delete", function (e) {
   const swalWithBootstrapButtons = Swal.mixin({
     customClass: {
-      confirmButton: "btn btn-success",
-      cancelButton: "btn btn-danger",
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
     },
-    buttonsStyling: false,
-  });
+    buttonsStyling: false
+})
 
-  swalWithBootstrapButtons
-    .fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this! Data connected to this student wont be retrieved once delete.",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, delete it!",
-      cancelButtonText: "No, cancel!",
-      reverseButtons: true,
-    })
-    .then((result) => {
-      if (result.isConfirmed) {
+
+Swal.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+  if (result.isConfirmed) {
+
         var currentRow = $(this).closest("tr");
 
         var col1 = currentRow.find("td:eq(0)").text(); // get current row 1st TD value
@@ -762,7 +762,7 @@ document
 
 $("#studentTable").on("click", "td.view", function (e) {
   var currentRow = $(this).closest("tr");
-
+var col1 = currentRow.find("td:eq(0)").text(); // get current row 2nd TD
   var col2 = currentRow.find("td:eq(1)").text(); // get current row 2nd TD
 
   var col3 = currentRow.find("td:eq(2)").text(); // get current row 3rd TD
@@ -772,15 +772,20 @@ $("#studentTable").on("click", "td.view", function (e) {
   var col8 = currentRow.find("td:eq(7)").text(); // get current row 8th TD
 
   var fname = col3 + " " + col4 + " " + col5;
-  var cy =  col7 + " " + col8 ;
+  var c =  col7 ;
+  var y =  col8 ;
 
   window.open(
     "view.student.info.php?sid=" +
       encodeURI(col2) +
       "&studentname=" +
       encodeURI(fname)+
-      "&courseYear="+
-      encodeURI(cy),
+       "&id="+
+      encodeURI(col1)+
+      "&course="+
+      encodeURI(c)+
+      "&year="+
+      encodeURI(y),
     "_self"
   );
 
